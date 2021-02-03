@@ -6,10 +6,10 @@ provenance of SPARQL queries using the Wikidata dataset.
 ## Setting up the machine
 
 These experiments are designed to run in different machines.  Machine
-configuration, benchmark results, and information about tasks that
-have been done are saved and tracked in the `machines` directory. Each
-machine has a separate folder. In the current version we have the
-following structure:
+configuration, benchmark results, and information about the status of
+tasks are saved and tracked in the `machines` directory. Each machine
+has a separate folder. In the current version we have the following
+structure:
 
 ```
 machines/
