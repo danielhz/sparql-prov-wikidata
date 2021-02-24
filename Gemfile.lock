@@ -3,12 +3,25 @@ GEM
   specs:
     bcrypt_pbkdf (1.1.0)
     coderay (1.1.3)
+    concurrent-ruby (1.1.8)
+    connection_pool (2.2.3)
     ed25519 (1.2.4)
+    hamster (3.0.0)
+      concurrent-ruby (~> 1.0)
+    link_header (0.0.8)
     method_source (1.0.0)
+    net-http-persistent (4.0.1)
+      connection_pool (~> 2.2)
     net-ssh (6.1.0)
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    rdf (3.1.12)
+      hamster (~> 3.0)
+      link_header (~> 0.0, >= 0.0.8)
+    sparql-client (3.1.2)
+      net-http-persistent (~> 4.0, >= 4.0.1)
+      rdf (~> 3.1)
 
 PLATFORMS
   x86_64-linux
@@ -18,6 +31,7 @@ DEPENDENCIES
   ed25519 (= 1.2.4)
   net-ssh (~> 6.1.0)
   pry
+  sparql-client
 
 BUNDLED WITH
    2.2.3
