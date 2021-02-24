@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "type": "Wikidata::SnowflakeQueryPattern",
+    "entity_id": 6581097,
+    "bindings": [
+      [
+        734,
+        62649302
+      ],
+      [
+        20,
+        1085
+      ],
+      [
+        735,
+        746076
+      ],
+      [
+        21,
+        6581097
+      ],
+      [
+        19,
+        1686873
+      ],
+      [
+        106,
+        2095549
+      ]
+    ]
+  },
+  "pattern": {
+    "projected": [
+      "?x",
+      "?y1",
+      "?y2"
+    ],
+    "subpatterns": [
+      {
+        "meta": {
+          "type": "Wikidata::StarQueryGenerator"
+        },
+        "pattern": {
+          "center": "?x",
+          "edges": [
+            {
+              "predicate": 734,
+              "object": 62649302
+            },
+            {
+              "predicate": 20,
+              "object": 1085
+            },
+            {
+              "predicate": 735,
+              "object": "?y1"
+            },
+            {
+              "predicate": 21,
+              "object": "?y2"
+            },
+            {
+              "predicate": 19,
+              "object": "?y3"
+            },
+            {
+              "predicate": 106,
+              "object": "?y4"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
