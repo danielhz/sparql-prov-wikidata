@@ -1,7 +1,7 @@
 bench_dependencies = []
 
 %w{fuseki virtuoso}.each do |engine|
-  %w{star}.each do |template|
+  %w{star minus}.each do |template|
     %w{03 06}.each do |size|
       %w{B R P}.each do |mode|
         task_name = "bench_#{engine}_#{template}_#{size}_#{mode}"

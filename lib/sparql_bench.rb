@@ -129,23 +129,23 @@ def wikidata_bench(endpoint, template, size, mode, times = 5)
   results = "results/#{endpoint.name}-#{template}-#{size}-#{mode}.csv"
   FileUtils.mkdir_p('results')
 
-  puts "Checking if this query produces timeouts"
-  out = endpoint.bench_query(queries.first)
-  puts "result time=#{out[0]} status=#{out[1]}"
-  if out[0] >= endpoint.timeout or out[1] != '200'
-    puts "timeout detected"
-    CSV.open(results, 'w') do |csv|
-      csv << %w{engine template size mode query_id repetition time status}
-      queries.each do |query|
-        query_name = File.basename(query).sub(/.sparql$/, '')
-        csv << [endpoint.name, template, size, mode, query_name, 1, endpoint.timeout, 500]
-      end
-    end
-    endpoint.stop
-    return
-  else
-    puts "no timeout"
-  end
+  # puts "Checking if this query produces timeouts"
+  # out = endpoint.bench_query(queries.first)
+  # puts "result time=#{out[0]} status=#{out[1]}"
+  # if out[0] >= endpoint.timeout or out[1] != '200'
+  #   puts "timeout detected"
+  #   CSV.open(results, 'w') do |csv|
+  #     csv << %w{engine template size mode query_id repetition time status}
+  #     queries.each do |query|
+  #       query_name = File.basename(query).sub(/.sparql$/, '')
+  #       csv << [endpoint.name, template, size, mode, query_name, 1, endpoint.timeout, 500]
+  #     end
+  #   end
+  #   endpoint.stop
+  #   return
+  # else
+  #   puts "no timeout"
+  # end
   
   queries.each do |query|
     puts "warming up #{query}"
