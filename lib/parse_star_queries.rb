@@ -13,7 +13,7 @@ Dir["queries/patterns/star/*/*.json"].each do |pattern_file|
 
   parser = Wikidata::TruthySnowflakePattern.new(pattern['pattern'])
 
-  query_dir = File.dirname(pattern_file).sub('patterns', 'sparql')
+  query_dir = File.join(File.dirname(pattern_file).sub('patterns', 'sparql'), 'B')
   
   FileUtils.mkdir_p(query_dir)
 
