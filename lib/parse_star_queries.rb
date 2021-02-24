@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'json'
+require 'pry'
+
+require_relative 'query_json_to_sparql/wikidata.rb'
+
+Dir["queries/patterns/star/*/*.json"].each do |pattern_file|
+  puts pattern_file
+
+  pattern = JSON.parse(File.read(pattern_file))
+
+  parser = Wikidata::TruthySnowflakePattern.new(pattern['pattern'])
+
+  query_dir = File.dirname(pattern_file).sub('patterns', 'sparql')
+  
+  FileUtils.mkdir_p(query_dir)
+
+  query_file = File.basename(pattern_file.sub(/.json$/, '.sparql'))
+
+  File.open("#{query_dir}/#{query_file}", 'w') do |query_file|
+    query_file.puts parser.sparql_select_query
+  end
+end
+

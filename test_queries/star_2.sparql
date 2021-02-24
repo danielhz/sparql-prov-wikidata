@@ -1,0 +1,10 @@
+SELECT DISTINCT * WHERE {
+  <http://www.wikidata.org/entity/Q79135984>
+    ?p1 ?o1 ;
+    ?p2 ?o2 .
+  FILTER (?p1 != ?p2) .
+  FILTER (regex(str(?p1), "^http://www.wikidata.org/prop/direct/")) .
+  FILTER (regex(str(?p2), "^http://www.wikidata.org/prop/direct/")) .
+  FILTER (regex(str(?o1), "^http://www.wikidata.org/entity/"))
+  FILTER (regex(str(?o2), "^http://www.wikidata.org/entity/"))
+}

@@ -1,0 +1,12 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+SELECT ?x ?y1 ?y2
+WHERE {
+  ?x
+    wdt:P156 wd:Q21204822 ;
+    wdt:P6216 wd:Q19652 ;
+    wdt:P361 ?y1 ;
+    wdt:P1433 ?y2 ;
+    wdt:P921 ?y3 ;
+    wdt:P155 ?y4
+}
