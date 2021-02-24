@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "type": "Wikidata::MinusQueryGenerator",
+    "entity_id": 336286,
+    "bindings": [
+      [
+        735,
+        339346
+      ],
+      [
+        19,
+        49220
+      ],
+      [
+        734,
+        21491610
+      ],
+      [
+        1532,
+        30
+      ],
+      [
+        106,
+        937857
+      ],
+      [
+        641,
+        2736
+      ]
+    ]
+  },
+  "pattern": {
+    "projected": [
+      "?x",
+      "?y1",
+      "?y2"
+    ],
+    "pattern1": {
+      "meta": {
+        "type": "Wikidata::StarQueryGenerator"
+      },
+      "pattern": {
+        "center": "?x",
+        "edges": [
+          {
+            "predicate": 735,
+            "object": 339346
+          },
+          {
+            "predicate": 19,
+            "object": 49220
+          },
+          {
+            "predicate": 734,
+            "object": "?y1"
+          },
+          {
+            "predicate": 1532,
+            "object": "?y2"
+          },
+          {
+            "predicate": 106,
+            "object": "?y3a"
+          },
+          {
+            "predicate": 641,
+            "object": "?y4a"
+          }
+        ]
+      }
+    },
+    "pattern2": {
+      "meta": {
+        "type": "Wikidata::StarQueryGenerator"
+      },
+      "pattern": {
+        "center": "?x",
+        "edges": [
+          {
+            "predicate": 735,
+            "object": 339346
+          },
+          {
+            "predicate": 19,
+            "object": 49220
+          },
+          {
+            "predicate": 734,
+            "object": "?y1"
+          },
+          {
+            "predicate": 1532,
+            "object": "?y2"
+          },
+          {
+            "predicate": 106,
+            "object": "?y3b"
+          },
+          {
+            "predicate": 641,
+            "object": "?y4b"
+          }
+        ]
+      }
+    }
+  }
+}

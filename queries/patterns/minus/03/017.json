@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "type": "Wikidata::MinusQueryGenerator",
+    "entity_id": 22809680,
+    "bindings": [
+      [
+        688,
+        61542982
+      ],
+      [
+        684,
+        62177233
+      ],
+      [
+        703,
+        61779016
+      ]
+    ]
+  },
+  "pattern": {
+    "projected": [
+      "?x",
+      "?y1"
+    ],
+    "pattern1": {
+      "meta": {
+        "type": "Wikidata::StarQueryGenerator"
+      },
+      "pattern": {
+        "center": "?x",
+        "edges": [
+          {
+            "predicate": 688,
+            "object": 61542982
+          },
+          {
+            "predicate": 684,
+            "object": "?y1"
+          },
+          {
+            "predicate": 703,
+            "object": "?y2a"
+          }
+        ]
+      }
+    },
+    "pattern2": {
+      "meta": {
+        "type": "Wikidata::StarQueryGenerator"
+      },
+      "pattern": {
+        "center": "?x",
+        "edges": [
+          {
+            "predicate": 688,
+            "object": 61542982
+          },
+          {
+            "predicate": 684,
+            "object": "?y1"
+          },
+          {
+            "predicate": 703,
+            "object": "?y2b"
+          }
+        ]
+      }
+    }
+  }
+}

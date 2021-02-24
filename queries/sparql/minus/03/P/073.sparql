@@ -1,0 +1,91 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+SELECT
+  ?x ?y1
+  ?p_Sum
+  ?p_Sum_summand_Minus
+  ?p_Sum_summand_Minus_minuend_Product
+  ?p_Sum_summand_Minus_minuend_Product_factor_1_Sum
+  ?p_Sum_summand_Minus_minuend_Product_factor_1_Sum_summand_Statement
+  ?p_Sum_summand_Minus_minuend_Product_factor_2_Sum
+  ?p_Sum_summand_Minus_minuend_Product_factor_2_Sum_summand_Statement
+  ?p_Sum_summand_Minus_minuend_Product_factor_3_Sum
+  ?p_Sum_summand_Minus_minuend_Product_factor_3_Sum_summand_Statement
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum_summand_Statement
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum_summand_Statement
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum
+  ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum_summand_Statement
+WHERE {
+  {
+    {
+      ?x p:P141 ?p_Sum_summand_Minus_minuend_Product_factor_1_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_minuend_Product_factor_1_Sum_summand_Statement ps:P141 wd:Q278113 .
+      ?x p:P105 ?p_Sum_summand_Minus_minuend_Product_factor_2_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_minuend_Product_factor_2_Sum_summand_Statement ps:P105 ?y1 .
+      ?x p:P171 ?p_Sum_summand_Minus_minuend_Product_factor_3_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_minuend_Product_factor_3_Sum_summand_Statement ps:P171 ?y2a
+    }
+  OPTIONAL
+    {
+      ?x p:P141 ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum_summand_Statement ps:P141 wd:Q278113 .
+      ?x p:P105 ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum_summand_Statement ps:P105 ?y1 .
+      ?x p:P171 ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum_summand_Statement .
+      ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum_summand_Statement ps:P171 ?y2b
+    }
+  }
+  BIND (URI(concat(
+    "http://example.org/p_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1)
+  )) AS ?p_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1),
+    "&y2a=",ENCODE_FOR_URI(?y2a)
+  )) AS ?p_Sum_summand_Minus)
+  BIND (?p_Sum_summand_Minus AS 
+        ?p_Sum_summand_Minus_minuend_Product)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_minuend_Product_factor_1_Sum/",
+    "?x=",ENCODE_FOR_URI(?x)
+  )) AS ?p_Sum_summand_Minus_minuend_Product_factor_1_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_minuend_Product_factor_2_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1)
+  )) AS ?p_Sum_summand_Minus_minuend_Product_factor_2_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_minuend_Product_factor_3_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y2a=",ENCODE_FOR_URI(?y2a)
+  )) AS ?p_Sum_summand_Minus_minuend_Product_factor_3_Sum)
+  BIND (?p_Sum_summand_Minus AS 
+        ?p_Sum_summand_Minus_subtrahend_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_subtrahend_Sum_summand_Product/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1),
+    "&y2b=",ENCODE_FOR_URI(?y2b)
+  )) AS ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum/",
+    "?x=",ENCODE_FOR_URI(?x)
+  )) AS ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_1_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1)
+  )) AS ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_2_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y2b=",ENCODE_FOR_URI(?y2b)
+  )) AS ?p_Sum_summand_Minus_subtrahend_Sum_summand_Product_factor_3_Sum)
+}
