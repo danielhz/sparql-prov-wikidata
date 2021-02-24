@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "type": "Wikidata::UnionQueryGenerator",
+    "entity_id": 430682,
+    "bindings": [
+      [
+        1343,
+        16014697
+      ],
+      [
+        69,
+        337480
+      ],
+      [
+        21,
+        6581097
+      ]
+    ]
+  },
+  "pattern": {
+    "subpatterns": [
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 1343,
+                    "object": 16014697
+                  },
+                  {
+                    "predicate": 69,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 21,
+                    "object": "?y2a"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 1343,
+                    "object": 16014697
+                  },
+                  {
+                    "predicate": 69,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 21,
+                    "object": "?y2b"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

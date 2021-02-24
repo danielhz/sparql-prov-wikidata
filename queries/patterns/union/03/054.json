@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "type": "Wikidata::UnionQueryGenerator",
+    "entity_id": 22809680,
+    "bindings": [
+      [
+        688,
+        24116061
+      ],
+      [
+        703,
+        21102924
+      ],
+      [
+        2548,
+        22809680
+      ]
+    ]
+  },
+  "pattern": {
+    "subpatterns": [
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 688,
+                    "object": 24116061
+                  },
+                  {
+                    "predicate": 703,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 2548,
+                    "object": "?y2a"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 688,
+                    "object": 24116061
+                  },
+                  {
+                    "predicate": 703,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 2548,
+                    "object": "?y2b"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

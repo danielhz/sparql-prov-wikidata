@@ -26,5 +26,16 @@ module Wikidata
       end.join(" .\n")
       e
     end
+
+    # Returns all variables generated as statements
+    # def statement_vars
+    #   edges = @pattern_data['edges']
+    #   (1...edges.size).map do |i|
+    #     [
+    #       "#{@args[:poly]}_Product_factor_#{@args[:first_statement] + i}_Sum",
+    #       "#{@args[:poly]}_Product_factor_#{@args[:first_statement] + i}_Sum_summand_Statement"
+    #     ]
+    #   end.flatten
+    # end
   end
 end

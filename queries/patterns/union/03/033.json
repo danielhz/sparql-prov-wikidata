@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "type": "Wikidata::UnionQueryGenerator",
+    "entity_id": 975915,
+    "bindings": [
+      [
+        413,
+        975915
+      ],
+      [
+        106,
+        15117302
+      ],
+      [
+        19,
+        2078072
+      ]
+    ]
+  },
+  "pattern": {
+    "subpatterns": [
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 413,
+                    "object": 975915
+                  },
+                  {
+                    "predicate": 106,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 19,
+                    "object": "?y2a"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 413,
+                    "object": 975915
+                  },
+                  {
+                    "predicate": 106,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 19,
+                    "object": "?y2b"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

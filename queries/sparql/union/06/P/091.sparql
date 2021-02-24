@@ -1,0 +1,194 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+SELECT
+  ?x ?y1
+  ?p_Add
+  ?p_Add_summand_1_Sum
+  ?p_Add_summand_1_Sum_summand_Product
+  ?p_Add_summand_1_Sum
+  ?p_Add_summand_1_Sum_summand_Product
+  ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum_summand_Statement
+  ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum_summand_Statement
+  ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum_summand_Statement
+  ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum_summand_Statement
+  ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum_summand_Statement
+  ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum
+  ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum_summand_Statement
+  ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum
+  ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum_summand_Statement
+WHERE {
+  {
+    {
+      SELECT
+        ?x ?y1
+        ?p_Add_summand_1_Sum
+        ?p_Add_summand_1_Sum_summand_Product
+        ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum_summand_Statement
+        ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum_summand_Statement
+        ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum_summand_Statement
+        ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum_summand_Statement
+        ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum_summand_Statement
+        ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum
+        ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum_summand_Statement
+      WHERE {
+        {
+          ?x p:P20 ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum_summand_Statement ps:P20 wd:Q198140 .
+          ?x p:P166 ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum_summand_Statement ps:P166 wd:Q4375578 .
+          ?x p:P735 ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum_summand_Statement ps:P735 ?y1 .
+          ?x p:P21 ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum_summand_Statement ps:P21 ?y2 .
+          ?x p:P607 ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum_summand_Statement ps:P607 ?y3a .
+          ?x p:P119 ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum_summand_Statement .
+          ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum_summand_Statement ps:P119 ?y4a
+        }
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_1_Sum/",
+          "?x=",ENCODE_FOR_URI(?x)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_1_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_2_Sum/",
+          "?x=",ENCODE_FOR_URI(?x)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_2_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_3_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_3_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_4_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y2=",ENCODE_FOR_URI(?y2)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_4_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_5_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y3a=",ENCODE_FOR_URI(?y3a)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_5_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product_factor_6_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y4a=",ENCODE_FOR_URI(?y4a)
+        )) AS ?p_Add_summand_1_Sum_summand_Product_factor_6_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum_summand_Product/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1),
+          "&y2=",ENCODE_FOR_URI(?y2),
+          "&y3a=",ENCODE_FOR_URI(?y3a),
+          "&y4a=",ENCODE_FOR_URI(?y4a)
+        )) AS ?p_Add_summand_1_Sum_summand_Product)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_1_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1)
+        )) AS ?p_Add_summand_1_Sum)
+      }
+    }
+    UNION
+    {
+      SELECT
+        ?x ?y1
+        ?p_Add_summand_2_Sum
+        ?p_Add_summand_2_Sum_summand_Product
+        ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum_summand_Statement
+        ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum_summand_Statement
+        ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum_summand_Statement
+        ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum_summand_Statement
+        ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum_summand_Statement
+        ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum
+        ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum_summand_Statement
+      WHERE {
+        {
+          ?x p:P20 ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum_summand_Statement ps:P20 wd:Q198140 .
+          ?x p:P166 ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum_summand_Statement ps:P166 wd:Q4375578 .
+          ?x p:P735 ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum_summand_Statement ps:P735 ?y1 .
+          ?x p:P21 ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum_summand_Statement ps:P21 ?y2 .
+          ?x p:P607 ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum_summand_Statement ps:P607 ?y3b .
+          ?x p:P119 ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum_summand_Statement .
+          ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum_summand_Statement ps:P119 ?y4b
+        }
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_1_Sum/",
+          "?x=",ENCODE_FOR_URI(?x)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_1_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_2_Sum/",
+          "?x=",ENCODE_FOR_URI(?x)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_2_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_3_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_3_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_4_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y2=",ENCODE_FOR_URI(?y2)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_4_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_5_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y3b=",ENCODE_FOR_URI(?y3b)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_5_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product_factor_6_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y4b=",ENCODE_FOR_URI(?y4b)
+        )) AS ?p_Add_summand_2_Sum_summand_Product_factor_6_Sum)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum_summand_Product/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1),
+          "&y2=",ENCODE_FOR_URI(?y2),
+          "&y3b=",ENCODE_FOR_URI(?y3b),
+          "&y4b=",ENCODE_FOR_URI(?y4b)
+        )) AS ?p_Add_summand_2_Sum_summand_Product)
+        BIND (URI(concat(
+          "http://example.org/p_Add_summand_2_Sum/",
+          "?x=",ENCODE_FOR_URI(?x),
+          "&y1=",ENCODE_FOR_URI(?y1)
+        )) AS ?p_Add_summand_2_Sum)
+      }
+    }
+  }
+  BIND (URI(concat(
+    "http://example.org/p_Add/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1)
+  )) AS ?p_Add)
+}

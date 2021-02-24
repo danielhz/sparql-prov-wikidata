@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "type": "Wikidata::UnionQueryGenerator",
+    "entity_id": 5994,
+    "bindings": [
+      [
+        1303,
+        5994
+      ],
+      [
+        735,
+        168280
+      ],
+      [
+        27,
+        403
+      ],
+      [
+        106,
+        36834
+      ],
+      [
+        21,
+        6581097
+      ],
+      [
+        69,
+        1479582
+      ]
+    ]
+  },
+  "pattern": {
+    "subpatterns": [
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 1303,
+                    "object": 5994
+                  },
+                  {
+                    "predicate": 735,
+                    "object": 168280
+                  },
+                  {
+                    "predicate": 27,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 106,
+                    "object": "?y2"
+                  },
+                  {
+                    "predicate": 21,
+                    "object": "?y3a"
+                  },
+                  {
+                    "predicate": 69,
+                    "object": "?y4a"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "meta": {
+          "type": "Wikidata::SnowflakePattern"
+        },
+        "pattern": {
+          "projected": [
+            "?x",
+            "?y1"
+          ],
+          "subpatterns": [
+            {
+              "meta": {
+                "type": "Wikidata::StarPattern"
+              },
+              "pattern": {
+                "center": "?x",
+                "edges": [
+                  {
+                    "predicate": 1303,
+                    "object": 5994
+                  },
+                  {
+                    "predicate": 735,
+                    "object": 168280
+                  },
+                  {
+                    "predicate": 27,
+                    "object": "?y1"
+                  },
+                  {
+                    "predicate": 106,
+                    "object": "?y2"
+                  },
+                  {
+                    "predicate": 21,
+                    "object": "?y3b"
+                  },
+                  {
+                    "predicate": 69,
+                    "object": "?y4b"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

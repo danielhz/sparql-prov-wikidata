@@ -1,0 +1,180 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'fileutils'
+require 'pry'
+
+require './lib/sparql_bench.rb'
+
+RANDOM = Random.new(0)
+
+STAR_SIZE = 6
+GEOMETRY = 'union'
+QUERY_DIR = "queries/patterns/#{GEOMETRY}/#{'%02d' % STAR_SIZE}"
+QUERY_NUM = 100
+
+endpoint =  LXDFusekiEndpoint.new('wikidata-20200127-fuseki3-ubuntu2004')
+
+endpoint.start
+
+query_id = 0
+
+def wd_entity_id(uri)
+  uri.sub('http://www.wikidata.org/entity/Q', '').to_i
+end
+
+def wd_prop_id(uri)
+  uri.sub('http://www.wikidata.org/prop/direct/P', '').to_i
+end
+
+def pattern_obj(entity_id, pairs)
+  doc = {
+    meta: {
+      type: "Wikidata::UnionQueryGenerator",
+      entity_id: entity_id.to_i,
+      bindings: pairs
+    },
+    pattern: {
+      subpatterns: [
+        {
+          meta: {
+            type: 'Wikidata::SnowflakePattern'
+          },
+          pattern: {
+            projected: [ "?x", "?y1" ],
+            subpatterns: [
+              {
+                meta: {
+                  type: "Wikidata::StarPattern"
+                },            
+                pattern: {
+                  center: '?x',
+                  edges: [
+                    {
+                      predicate: pairs[0][0],
+                      object: pairs[0][1],
+                    },
+                    {
+                      predicate: pairs[1][0],
+                      object: pairs[1][1],
+                    },
+                    {
+                      predicate: pairs[2][0],
+                      object: '?y1',
+                    },
+                    {
+                      predicate: pairs[3][0],
+                      object: '?y2',
+                    },
+                    {
+                      predicate: pairs[4][0],
+                      object: '?y3a',
+                    },
+                    {
+                      predicate: pairs[5][0],
+                      object: '?y4a',
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          meta: {
+            type: 'Wikidata::SnowflakePattern'
+          },
+          pattern: {
+            projected: [ "?x", "?y1" ],
+            subpatterns: [
+              {
+                meta: {
+                  type: "Wikidata::StarPattern"
+                },            
+                pattern: {
+                  center: '?x',
+                  edges: [
+                    {
+                      predicate: pairs[0][0],
+                      object: pairs[0][1],
+                    },
+                    {
+                      predicate: pairs[1][0],
+                      object: pairs[1][1],
+                    },
+                    {
+                      predicate: pairs[2][0],
+                      object: '?y1',
+                    },
+                    {
+                      predicate: pairs[3][0],
+                      object: '?y2',
+                    },
+                    {
+                      predicate: pairs[4][0],
+                      object: '?y3b',
+                    },
+                    {
+                      predicate: pairs[5][0],
+                      object: '?y4b',
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }      
+      ]
+    }
+  }
+end
+
+FileUtils.mkdir_p(QUERY_DIR)
+
+Zlib::GzipReader.open('/data/datasets/entities-shuffled.gz') do |gz|
+
+  while query_id < QUERY_NUM do
+    entity_id = gz.readline.strip
+
+    query = endpoint.sparql.select.distinct
+              .where([RDF::URI("http://www.wikidata.org/entity/Q#{entity_id}"), :p, :o])
+              .filter('regex(str(?p), "^http://www.wikidata.org/prop/direct/P")')
+              .filter('regex(str(?o), "^http://www.wikidata.org/entity/Q")')
+              .filter('?p != <http://www.wikidata.org/prop/direct/P31>')
+
+    result = query.solutions
+
+    result_map = {}
+
+    result.each do |solution|      
+      prop_id = wd_prop_id(solution[:p].to_s)
+      entity_id = wd_entity_id(solution[:o].to_s)
+
+      if result_map.include? prop_id
+        result_map[prop_id].append entity_id
+      else
+        result_map[prop_id] = [entity_id]
+      end
+    end
+
+    if result_map.size >= STAR_SIZE
+      query_id += 1
+
+      pairs = result_map.to_a.shuffle(random: RANDOM)[0...STAR_SIZE]
+
+      pairs.each do |pair|
+        pair[1] = pair[1].sample(random: RANDOM)
+      end      
+     
+      File.open("#{QUERY_DIR}/#{'%03d' % query_id}.json", "w") do |query_file|
+        query_file.puts JSON.pretty_generate(pattern_obj(entity_id, pairs))
+      end      
+    else
+      next
+    end
+
+    puts "Attempt query_id=#{query_id} result_size=#{result.size} entity_id=#{entity_id}"
+  end
+end
+
+endpoint.stop

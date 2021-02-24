@@ -12,7 +12,7 @@ module Wikidata
         sub_args = @args.merge(
           {
             indent: @args[:indent] + subpatterns_additional_indent,
-            poly: "#{@args[:poly]}_Sum_summand_Sum_summand_#{i + 1}"
+            poly: "#{@args[:poly]}_Add_summand_#{i + 1}"
           }
         )
         subpattern_class.new(subpattern['pattern'], **sub_args)

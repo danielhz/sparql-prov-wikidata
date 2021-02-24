@@ -22,10 +22,11 @@ module Wikidata
                   .map { |var| "#{indent(1)}#{var}" }
                   .join("\n")
       "#{indent(0)}SELECT\n#{indent(1)}#{domain.join(' ')}\n" \
-      "#{indent(1)}#{@args[:poly]}_Sum\n" \
-      "#{indent(1)}#{@args[:poly]}_Sum_summand_Sum\n" \
-      "#{indent(1)}#{@args[:poly]}_Sum_summand_Sum_summand_1_Product\n" \
-      "#{indent(1)}#{@args[:poly]}_Sum_summand_Sum_summand_2_Product\n" \
+      "#{indent(1)}#{@args[:poly]}_Add\n" \
+      "#{indent(1)}#{@args[:poly]}_Add_summand_1_Sum\n" \
+      "#{indent(1)}#{@args[:poly]}_Add_summand_1_Sum_summand_Product\n" \
+      "#{indent(1)}#{@args[:poly]}_Add_summand_1_Sum\n" \
+      "#{indent(1)}#{@args[:poly]}_Add_summand_1_Sum_summand_Product\n" \
       "#{st_vars}"
     end
 
@@ -37,8 +38,7 @@ module Wikidata
       [
         "#{indent(0)}WHERE {",
         "#{indent(1)}{\n#{subpatterns_sparql}\n#{indent(1)}}",
-        bind_mapping(variables: subpatterns_domain, suffix: 'Sum_summand_Product'),
-        bind_mapping(variables: domain, suffix: 'Sum'),
+        bind_mapping(variables: domain, suffix: 'Add'),
         '}'
       ].flatten.map { |x| "#{indent(0)}#{x}" }.join("\n")
     end
