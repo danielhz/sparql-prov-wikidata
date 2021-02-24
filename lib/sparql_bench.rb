@@ -119,13 +119,14 @@ class LXDVirtuosoEndpoint < Endpoint
   end
 end
 
-def tpch_bench(endpoint, scale_factor, template, mode, times = 5)
-  puts "Starting workload #{[endpoint, scale_factor, template, mode].join('-')}"
+def wikidata_bench(endpoint, template, size, mode, times = 5)
+  puts "Starting workload #{[endpoint.name, template, size, mode].join('-')}"
   
   endpoint.start
-  queries = Dir[File.join('queries', template, mode, scale_factor, 'q*.sparql')].sort
+  queries =
+    Dir["queries/sparql/#{template}/#{size}/#{mode}/*.sparql"].sort
 
-  results = "results/#{endpoint.name}-#{scale_factor}-#{template}-#{mode}.csv"
+  results = "results/#{endpoint.name}-#{template}-#{size}-#{mode}.csv"
   FileUtils.mkdir_p('results')
 
   puts "Checking if this query produces timeouts"
@@ -134,11 +135,10 @@ def tpch_bench(endpoint, scale_factor, template, mode, times = 5)
   if out[0] >= endpoint.timeout or out[1] != '200'
     puts "timeout detected"
     CSV.open(results, 'w') do |csv|
-      csv << %w{engine scale_factor template mode query_id repetition time status}
+      csv << %w{engine template size mode query_id repetition time status}
       queries.each do |query|
         query_name = File.basename(query).sub(/.sparql$/, '')
-        csv << [endpoint.name, scale_factor.sub('d', '.'), template, mode,
-                query_name, 1, endpoint.timeout, 500]
+        csv << [endpoint.name, template, size, mode, query_name, 1, endpoint.timeout, 500]
       end
     end
     endpoint.stop
@@ -159,14 +159,13 @@ def tpch_bench(endpoint, scale_factor, template, mode, times = 5)
   end
 
   CSV.open(results, 'w') do |csv|
-    csv << %w{engine scale_factor template mode query_id repetition time status}
+    csv << %w{engine template size mode query_id repetition time status}
     (1..times).each do |repetition|
       queries.each do |query|
         puts "running query #{query} (repetition #{repetition})"
         out = endpoint.bench_query(query)
         query_name = File.basename(query).sub(/.sparql$/, '')
-        csv << [endpoint.name, scale_factor.sub('d', '.'), template, mode,
-                query_name, repetition, out[0], out[1]]
+        csv << [endpoint.name, template, size, mode, query_name, repetition, out[0], out[1]]
         csv.flush
       end
     end
