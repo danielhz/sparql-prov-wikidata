@@ -9,7 +9,7 @@ require './lib/sparql_bench.rb'
 RANDOM = Random.new(0)
 
 STAR_SIZE = 6
-QUERY_DIR = "queries/patterns/#{'%02d' % STAR_SIZE}"
+QUERY_DIR = "queries/patterns/star/#{'%02d' % STAR_SIZE}"
 QUERY_NUM = 100
 
 endpoint =  LXDFusekiEndpoint.new('wikidata-20200127-fuseki3-ubuntu2004')
