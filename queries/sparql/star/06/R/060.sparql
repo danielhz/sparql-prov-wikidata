@@ -1,0 +1,13 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+SELECT ?x ?y1 ?y2
+WHERE {
+  ?x
+    p:P279 [ ps:P279 wd:Q68182219 ] ;
+    p:P780 [ ps:P780 wd:Q693058 ] ;
+    p:P689 [ ps:P689 ?y1 ] ;
+    p:P2239 [ ps:P2239 ?y2 ] ;
+    p:P828 [ ps:P828 ?y3 ] ;
+    p:P636 [ ps:P636 ?y4 ]
+}

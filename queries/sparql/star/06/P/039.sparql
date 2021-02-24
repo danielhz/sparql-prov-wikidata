@@ -1,0 +1,77 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+SELECT
+  ?x ?y1 ?y2
+  ?p_Sum
+  ?p_Sum_summand_Product
+  ?p_Sum_summand_Product_factor_1_Sum
+  ?p_Sum_summand_Product_factor_1_Sum_summand_Statement
+  ?p_Sum_summand_Product_factor_2_Sum
+  ?p_Sum_summand_Product_factor_2_Sum_summand_Statement
+  ?p_Sum_summand_Product_factor_3_Sum
+  ?p_Sum_summand_Product_factor_3_Sum_summand_Statement
+  ?p_Sum_summand_Product_factor_4_Sum
+  ?p_Sum_summand_Product_factor_4_Sum_summand_Statement
+  ?p_Sum_summand_Product_factor_5_Sum
+  ?p_Sum_summand_Product_factor_5_Sum_summand_Statement
+  ?p_Sum_summand_Product_factor_6_Sum
+  ?p_Sum_summand_Product_factor_6_Sum_summand_Statement
+WHERE {
+  {
+    ?x p:P106 ?p_Sum_summand_Product_factor_1_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_1_Sum_summand_Statement ps:P106 wd:Q4009406 .
+    ?x p:P1344 ?p_Sum_summand_Product_factor_2_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_2_Sum_summand_Statement ps:P1344 wd:Q495366 .
+    ?x p:P21 ?p_Sum_summand_Product_factor_3_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_3_Sum_summand_Statement ps:P21 ?y1 .
+    ?x p:P27 ?p_Sum_summand_Product_factor_4_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_4_Sum_summand_Statement ps:P27 ?y2 .
+    ?x p:P1532 ?p_Sum_summand_Product_factor_5_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_5_Sum_summand_Statement ps:P1532 ?y3 .
+    ?x p:P641 ?p_Sum_summand_Product_factor_6_Sum_summand_Statement .
+    ?p_Sum_summand_Product_factor_6_Sum_summand_Statement ps:P641 ?y4
+  }
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_1_Sum/",
+    "?x=",ENCODE_FOR_URI(?x)
+  )) AS ?p_Sum_summand_Product_factor_1_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_2_Sum/",
+    "?x=",ENCODE_FOR_URI(?x)
+  )) AS ?p_Sum_summand_Product_factor_2_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_3_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1)
+  )) AS ?p_Sum_summand_Product_factor_3_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_4_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y2=",ENCODE_FOR_URI(?y2)
+  )) AS ?p_Sum_summand_Product_factor_4_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_5_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y3=",ENCODE_FOR_URI(?y3)
+  )) AS ?p_Sum_summand_Product_factor_5_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product_factor_6_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y4=",ENCODE_FOR_URI(?y4)
+  )) AS ?p_Sum_summand_Product_factor_6_Sum)
+  BIND (URI(concat(
+    "http://example.org/p_Sum_summand_Product/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1),
+    "&y2=",ENCODE_FOR_URI(?y2),
+    "&y3=",ENCODE_FOR_URI(?y3),
+    "&y4=",ENCODE_FOR_URI(?y4)
+  )) AS ?p_Sum_summand_Product)
+  BIND (URI(concat(
+    "http://example.org/p_Sum/",
+    "?x=",ENCODE_FOR_URI(?x),
+    "&y1=",ENCODE_FOR_URI(?y1),
+    "&y2=",ENCODE_FOR_URI(?y2)
+  )) AS ?p_Sum)
+}

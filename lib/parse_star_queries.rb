@@ -11,16 +11,24 @@ Dir["queries/patterns/star/*/*.json"].each do |pattern_file|
 
   pattern = JSON.parse(File.read(pattern_file))
 
-  parser = Wikidata::TruthySnowflakePattern.new(pattern['pattern'])
+  parsers = {
+    B: Wikidata::TruthySnowflakePattern,
+    R: Wikidata::ReifiedSnowflakePattern,
+    P: Wikidata::ProvenanceSnowflakePattern
+  }
 
-  query_dir = File.join(File.dirname(pattern_file).sub('patterns', 'sparql'), 'B')
-  
-  FileUtils.mkdir_p(query_dir)
+  parsers.each do |mode, parser_class|
+    parser = parser_class.new(pattern['pattern'])
 
-  query_file = File.basename(pattern_file.sub(/.json$/, '.sparql'))
+    query_dir = File.join(File.dirname(pattern_file).sub('patterns', 'sparql'), mode.to_s)
+    
+    FileUtils.mkdir_p(query_dir)
 
-  File.open("#{query_dir}/#{query_file}", 'w') do |query_file|
-    query_file.puts parser.sparql_select_query
+    query_file = File.basename(pattern_file.sub(/.json$/, '.sparql'))
+
+    File.open("#{query_dir}/#{query_file}", 'w') do |query_file|
+      query_file.puts parser.sparql_select_query
+    end
   end
 end
 
