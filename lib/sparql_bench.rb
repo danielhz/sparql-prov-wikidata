@@ -1,13 +1,16 @@
 require 'net/ssh'
 require 'csv'
 require 'benchmark'
+require 'sparql/client'
 
 class Endpoint
   attr_accessor :timeout
+  attr_reader :sparql
   
   def initialize(container, timeout = 3000)
     @container = container
     @timeout = timeout
+    @sparql = nil
   end
 
   def container_ip
@@ -22,6 +25,7 @@ class Endpoint
   def start
     container_start
     service_start
+    @sparql = SPARQL::Client.new(endpoint_url)
   end
 
   def container_start
@@ -32,6 +36,7 @@ class Endpoint
 
   def stop
     system "lxc stop #{@container}"
+    @sparql = nil
   end
 
   # I use a double of the timeout because I manage the timeout in the service.
