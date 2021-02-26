@@ -117,6 +117,14 @@ class LXDVirtuosoEndpoint < Endpoint
     end
     puts "Service started"
   end
+
+  def stop
+    puts 'Stoping service'
+    virtuoso = 'virtuoso-7.2.5.1'
+    system "lxc exec #{@container} -- su - #{@user} -c " +
+           "\"~/#{virtuoso}/bin/isql 'EXEC=shutdown()'\""
+    super
+  end
 end
 
 def wikidata_bench(endpoint, template, size, mode, times = 5)
