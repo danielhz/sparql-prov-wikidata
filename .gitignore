@@ -5,3 +5,7 @@
 # Default symbolic links
 
 active_machine
+
+# RStudio auto generated files
+
+*.nb.html

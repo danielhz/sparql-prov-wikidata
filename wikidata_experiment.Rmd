@@ -1,0 +1,190 @@
+---
+title: "Wikidata experiments"
+output: html_notebook
+---
+
+# Load libraries
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(latex2exp)
+library(plotrix)
+library(scales)
+library(plyr)
+library(purrr)
+library(data.table)
+library(patternplot)
+library(gcookbook)
+```
+
+# Define some functions
+
+```{r}
+# Computes the standar derivation
+get.se <- function(y) {
+ se <- sd(y)/sqrt(length(y))
+ mu <- mean(y)
+ c(ymin=mu-se, ymax=mu+se)
+}
+```
+
+# Gets the data
+
+```{r}
+results <- 
+  list.files(path = "results", pattern = "*.csv", full.names = TRUE) %>% 
+  map_df(~fread(.)) %>% filter(query_id <= 20 & size == 6)
+
+# Discard queries producing timeouts
+timeout_queries <- filter(results, time >= 300 | status != 200)$query_id
+#results <- filter(results, !any(query_id == timeout_queries))
+results <- filter(results, query_id != 19 & query_id != 6 & query_id != 7)
+
+timeout_queries
+
+results$engine[results$engine == "fuseki"] <- "Fuseki"
+results$engine[results$engine == "virtuoso"] <- "Virtuoso"
+
+results$group <- paste(results$engine, results$mode)
+
+results$time <- with(results, time * 1000)
+
+labels <- c("Fuseki B", "Fuseki R", "Fuseki P",
+            "Virtuoso B", "Virtuoso R", "Virtuoso P")
+
+results$fill_position[results$group == "Fuseki B"] <- 1
+results$fill_position[results$group == "Fuseki R"] <- 2
+results$fill_position[results$group == "Fuseki P"] <- 3
+results$fill_position[results$group == "Virtuoso B"] <- 4
+results$fill_position[results$group == "Virtuoso R"] <- 5
+results$fill_position[results$group == "Virtuoso P"] <- 6
+
+p1 <- ggplot(results, #%>% filter(time < 300000),
+       aes(x=template, y=time, fill=reorder(group, fill_position))) +
+  # facet_wrap(~template, ncol = 3) +
+  stat_summary(fun=mean, geom="bar", size = 0.1,
+               position=position_dodge(preserve = "single"),
+               color="black") +
+  stat_summary(fun.data=get.se, geom="errorbar", width=0.5,
+               position=position_dodge(width = 0.9, preserve = "single")) +
+  scale_y_continuous(trans='log10', labels = trans_format("log10", math_format(10^.x))) +
+  xlab("query template") + ylab("time (ms)") +
+  scale_fill_manual(values = c("Fuseki B" = "#ece7f2",
+                               "Fuseki R" = "#a6bddb",
+                               "Fuseki P" = "#2b8cbe",
+                               "Virtuoso B" = "#fee8c8",
+                               "Virtuoso R" = "#fdbb84",
+                               "Virtuoso P" = "#e34a33"),
+                    breaks = c("Fuseki B",
+                               "Fuseki R",
+                               "Fuseki P",
+                               "Virtuoso B",
+                               "Virtuoso R",
+                               "Virtuoso P")) +
+  theme_bw(base_family = "Times") +
+  labs(fill = "engine and mode:")
+
+p1
+
+png(file="wikidata-times.png", res=500, width=3000, height=2400, pointsize=8)
+  p1
+dev.off()
+```
+
+```{r}
+# Function to calculate the mean and the standard deviation for each group.
+# data : a data frame
+# varname : the name of a column containing the variable to be summariezed
+# groupnames : vector of column names to be used as grouping variables
+data_summary <- function(data, varname, groupnames) {
+  require(plyr)
+  summary_func <- function(x, col) {
+    c(mean=mean(x[[col]], na.rm=TRUE), sd=sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func, varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
+
+# Summarize results by query instance.
+summarized_results <- data_summary(results,
+                                   varname="time",
+                                   groupnames=c("template", "engine",
+                                                "mode",
+                                                "query_id"))
+
+data_B <-
+  summarized_results %>% filter(mode == "B") %>% select(-"mode", -"sd")
+data_R <-
+  summarized_results %>% filter(mode == "R") %>% select(-"mode", -"sd")
+data_P <-
+  summarized_results %>% filter(mode == "P") %>% select(-"mode", -"sd")
+
+names(data_B)[names(data_B) == "time"] <- "time_B"
+names(data_R)[names(data_R) == "time"] <- "time_R"
+names(data_P)[names(data_P) == "time"] <- "time_P"
+
+overhead_data <- data_B %>% join(data_R) %>% join(data_P)
+overhead_data$ratio_RB <- overhead_data$time_R/overhead_data$time_B
+overhead_data$ratio_PB <- overhead_data$time_P/overhead_data$time_B
+overhead_data$ratio_PR <- overhead_data$time_P/overhead_data$time_R
+
+overhead_RB <- overhead_data %>% select("template", "engine", "ratio_RB")
+overhead_PB <- overhead_data %>% select("template", "engine", "ratio_PB")
+overhead_PR <- overhead_data %>% select("template", "engine", "ratio_PR")
+
+names(overhead_RB)[names(overhead_RB) == "ratio_RB"] <- "overhead"
+names(overhead_PB)[names(overhead_PB) == "ratio_PB"] <- "overhead"
+names(overhead_PR)[names(overhead_PR) == "ratio_PR"] <- "overhead"
+
+overhead_RB$ratio <- "R/B"
+overhead_PB$ratio <- "P/B"
+overhead_PR$ratio <- "P/R"
+
+overhead <- rbind(overhead_RB, overhead_PB, overhead_PR)
+
+overhead$group <- paste(overhead$engine, overhead$ratio)
+
+labels <- c("Fuseki R/B", "Fuseki P/R", "Fuseki P/B",
+            "Virtuoso R/B", "Virtuoso P/R", "Virtuoso P/B")
+
+overhead$fill_position[overhead$group == "Fuseki R/B"] <- 1
+overhead$fill_position[overhead$group == "Fuseki P/R"] <- 2
+overhead$fill_position[overhead$group == "Fuseki P/B"] <- 3
+overhead$fill_position[overhead$group == "Virtuoso R/B"] <- 4
+overhead$fill_position[overhead$group == "Virtuoso P/R"] <- 5
+overhead$fill_position[overhead$group == "Virtuoso P/B"] <- 6
+
+p2 <- ggplot(overhead,
+       aes(x=template, y=overhead, fill=reorder(group, fill_position))) +
+  # facet_wrap(~template, ncol = 3) +
+  stat_summary(fun=mean, geom="bar", size = 0.1,
+               position=position_dodge(preserve = "single"),
+               color="black") +
+  stat_summary(fun.data=get.se, geom="errorbar", width=0.5,
+               position=position_dodge(width = 0.9, preserve = "single")) +
+  scale_y_continuous(trans='log10', labels = trans_format("log10", math_format(10^.x))) +
+  xlab("query template") + ylab("overhead") +
+  scale_fill_manual(values = c("Fuseki R/B" = "#e5f5f9",
+                               "Fuseki P/R" = "#99d8c9",
+                               "Fuseki P/B" = "#2ca25f",
+                               "Virtuoso R/B" = "#fff7bc",
+                               "Virtuoso P/R" = "#fec44f",
+                               "Virtuoso P/B" = "#d95f0e"),
+                    breaks = c("Fuseki R/B",
+                               "Fuseki P/R",
+                               "Fuseki P/B",
+                               "Virtuoso R/B",
+                               "Virtuoso P/R",
+                               "Virtuoso P/B")) +
+  theme_bw(base_family = "Times") +
+  labs(fill = "engine and mode:")
+
+p2
+
+png(file="wikidata-overheads.png", res=500, width=3000, height=2400, pointsize=8)
+  p2
+dev.off()
+```
+
