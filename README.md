@@ -47,8 +47,7 @@ ln -s machines/a256 active_machine
 ## Preparing the environment
 
 In this experiment we need three tools: LXD to install engines inside
-containers, Ruby to automatize the execution of benchmarks, and
-TripleProv.
+containers, Ruby to automatize the execution of benchmarks.
 
 ### Setup LXD
 
