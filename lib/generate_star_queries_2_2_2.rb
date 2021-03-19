@@ -77,7 +77,7 @@ end
 
 FileUtils.mkdir_p(QUERY_DIR)
 
-Zlib::GzipReader.open('/data/datasets/entities-shuffled.gz') do |gz|
+Zlib::GzipReader.open('entities/entities-shuffled.gz') do |gz|
 
   while query_id < QUERY_NUM do
     entity_id = gz.readline.strip

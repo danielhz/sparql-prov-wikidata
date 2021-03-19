@@ -128,6 +128,44 @@ lxc copy virtuoso7-debian9 wikidata-20200127-virtuoso7-debian9
 We then copy the dataset into the containers and load the data as
 usual in both engines.
 
+## Creating the queries
+
+The creation of the queries requires a file containing a list of
+Wikidata entities.  The following command generates the
+afforementioned list of entities.
+
+```bash
+mkdir entities
+
+find dataset/wikidata-20200127-part*.nt.gz | \
+    parallel --progress \
+      'zcat {} | ' \
+      'grep "^<http://www.wikidata.org/entity/Q" | ' \
+      'sed -e "s/ .*//" -e "s/^<http:\/\/www.wikidata.org\/entity\/Q//" -e "s/>$//" | ' \
+      'uniq | gzip > entities/{/}'
+
+pigz -d -c entities/*.gz | uniq | \
+    sort -R --random-source=/dev/zero | pigz > entities/entities-shuffled.gz
+```
+
+So far, we have a file with all entities of the Wikidata dataset ordered randomly.
+We can now generate the queries with the following commands:
+
+```bash
+lib/generate_minus_queries_2_2_2.rb
+lib/generate_star_queries_2_2_2.rb
+lib/generate_union_queries_2_2_2.rb
+
+lib/parse_minus_queries.rb
+lib/parse_star_queries.rb
+lib/parse_union_queries.rb
+```
+
+Observe that to generate the queries, the scripts above use the
+dataset loaded in Fuseki to construct query patterns centered in the
+entities.
+
+
 ## Running the benchmark
 
 An experiment workload is defined by a combination of a query template
